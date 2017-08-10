@@ -1,6 +1,11 @@
 #
-# Cookbook:: build_cookbook
+# Cookbook:: mysql
 # Recipe:: default
 #
 # Copyright:: 2017, The Authors, All Rights Reserved.
-#include_recipe 'delivery-truck::default'
+
+package "mysql-server" do
+end
+
+package "mysql" do
+end

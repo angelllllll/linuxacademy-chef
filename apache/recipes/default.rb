@@ -4,22 +4,24 @@
 #
 # Copyright:: 2017, The Authors, All Rights Reserved.
 
-package "httpd" do
-         action :install
+if node["platform"] == "ubuntu"
+         execute "apt-get update -y" do
+         end
+end
+
+ 
+if node["platform"] ==  "centos"
+         package_name1  = "httpd"
+elsif node["platform"] ==  "ubuntu"
+         package_name1  = "apache2"
 end
 
 
+package "apache2" do
+          package_name package_name1
+end
 
 service "httpd" do
-         action [:enable, :start]
+          service_name package_name1
+          action [:enable, :start]
 end
-
-execute "rm /etc/httpd/conf.d/welcome.conf" do
-        only_if do
-                File.exist?("/etc/httpd/conf.d/welcome.conf")
-                end
-                notifies :restart, "service[httpd]"
-
-end
-
-include-recipe "php::default"
